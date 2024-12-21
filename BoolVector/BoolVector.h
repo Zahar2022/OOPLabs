@@ -1,5 +1,6 @@
 #pragma once
 
+
 class BoolVector
 
 {
@@ -12,9 +13,11 @@ public:
     BoolVector(int length = CellSize);
     BoolVector(int length, bool value); 
     BoolVector(const BoolVector& other);
+    BoolVector(const char* arr);
     ~BoolVector();
-    int length() const;//
-    void swap(BoolVector& other);//
+
+    int length() const;
+    void swap(BoolVector& other);
     bool bitValue(int index) const;
     void setBitValue(int index, bool value);
     void invert();
