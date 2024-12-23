@@ -3,10 +3,13 @@
 
 #include <iostream>
 #include "Set.h"
+#include "BoolVector.h"
 
 Set::Set() :BoolVector(charSize) {}
 
+
 Set::~Set() {}
+
 
 Set::Set(const char* array, int const size)
     : BoolVector(charSize)
@@ -15,9 +18,11 @@ Set::Set(const char* array, int const size)
         appendElement(array[i]);
 }
 
+
 Set::Set(const Set& other)
     :BoolVector(other)
 {}
+
 
 const char Set::maxElement() const
 {
@@ -27,6 +32,7 @@ const char Set::maxElement() const
     return 0;
 }
 
+
 const char Set::minElement() const
 {
     for (int i = 0; i < charSize; i++)
@@ -35,29 +41,35 @@ const char Set::minElement() const
     return 0;
 }
 
+
 bool Set::findElement(const char ch)
 {
     return bitValue(ch);
 }
+
 
 const int Set::power() const
 {
     return weight();
 }
 
+
 Set& Set::operator=(const Set& other) {
     BoolVector::operator=(other);
     return *this;
 }
 
+
 bool Set::operator==(const Set& other) const {
     return *this == other;
 }
+
 
 bool Set::operator!=(const Set& other) const
 {
     return !(*this == other);
 }
+
 
 Set Set::operator|(const Set& other) const {
     Set result = *this;
@@ -65,10 +77,12 @@ Set Set::operator|(const Set& other) const {
     return result;
 }
 
+
 Set& Set::operator|=(const Set& other) {
     BoolVector::operator|=(other);
     return *this;
 }
+
 
 Set Set::operator&(const Set& other) const {
     Set result = *this;
@@ -76,25 +90,30 @@ Set Set::operator&(const Set& other) const {
     return result;
 }
 
+
 Set& Set::operator&=(const Set& other) {
     BoolVector::operator&=(other);
     return *this;
 }
 
+
 Set Set::operator/(const Set& other) const {
+    Set result = *this; 
+    for (int i = 0; i < charSize; ++i) {
+        if (other.bitValue(i)) {
+            result.deleteElement(i); 
+        }
+    }
+    return result;
+}
+
+
+Set& Set::operator/=(const Set& other) {
     Set result = *this;
     result /= other;
     return result;
 }
 
-Set& Set::operator/=(const Set& other) {
-    for (int i = 0; i < charSize; ++i) {
-        if (other.bitValue(i)) {
-            setBitValue(i, false);
-        }
-    }
-    return *this;
-}
 
 Set Set::operator~() const {
     Set result = *this;
@@ -102,16 +121,19 @@ Set Set::operator~() const {
     return result;
 }
 
+
 Set Set::operator+(const char ch) const {
     Set result = *this;
     result.appendElement(ch);
     return result;
 }
 
+
 Set& Set::operator+=(const char ch) {
     appendElement(ch);
     return *this;
 }
+
 
 Set Set::operator-(const char ch) const {
     Set result = *this;
@@ -119,10 +141,12 @@ Set Set::operator-(const char ch) const {
     return result;
 }
 
+
 Set& Set::operator-=(const char ch) {
     deleteElement(ch);
     return *this;
 }
+
 
 std::ostream& operator<<(std::ostream& os, const Set& set) {
     os << "{";
@@ -139,6 +163,7 @@ std::ostream& operator<<(std::ostream& os, const Set& set) {
     os << "}";
     return os;
 }
+
 
 std::istream& operator>>(std::istream& is, Set& set) {
     std::string input;
