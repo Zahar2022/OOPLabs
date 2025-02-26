@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <utility>
 #include "BoolVector.h"
+#include <string.h>
 
 
 BoolVector::BoolVector(int length) 
@@ -12,9 +13,10 @@ BoolVector::BoolVector(int length)
 	assert(length >= 0);
 	m_cellCount = m_length / CellSize;
 	m_cells = new Cell[m_cellCount];
+	if (m_length % CellSize != 0) { m_cellCount++; }
 	for (int i = 0; i < m_cellCount; ++i) {
 		m_cells[i] = 0;
-	}
+	} 
 }
 
 
@@ -137,7 +139,7 @@ void BoolVector::setBits(int index, int count, bool value) {
 void BoolVector::setAllBits(bool value) {
 	for (size_t i = 0; i < m_cellCount; ++i) {
 		if (value) {
-			m_cells[i] = ~0;
+			m_cells[i] = 1;
 		}
 		else {
 			m_cells[i] = 0;
@@ -160,6 +162,15 @@ int BoolVector::weight() const {
 
 BoolVector& BoolVector::operator=(const BoolVector& other)
 {
+	if (this != &other) {
+		delete[] m_cells;
+		m_cellCount = other.m_cellCount;
+		m_length = other.m_length;
+		m_cells = new Cell[m_cellCount];
+		for (size_t i = 0; i < m_cellCount; ++i) {
+			m_cells[i] = other.m_cells[i];
+		}
+	}
 	return *this;
 }
 
@@ -362,13 +373,6 @@ BoolVector::Rank::operator bool() const
 
 
 
-int main() {
-
-
-
-
-	return 0;
-}
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
 

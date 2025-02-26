@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoolVector.cpp" />
+    <ClCompile Include="BoolVectorTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoolVector.h" />

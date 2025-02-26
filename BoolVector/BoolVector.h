@@ -39,8 +39,10 @@ public:
     BoolVector& operator<<=(int shift);
     BoolVector operator>>(int shift) const;
     BoolVector& operator>>=(int shift);
+
     friend std::ostream& operator<<(std::ostream& os, const BoolVector& bv);
     friend std::istream& operator>>(std::istream& is, BoolVector& bv);
+
     Rank operator[](int index);
 
 
